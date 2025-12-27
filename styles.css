@@ -1,0 +1,658 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased; /* Mejora el renderizado de texto al moverte */
+}
+
+/* HEADER (Mobile First) */
+header {
+    display: flex;
+    flex-direction: column; /* En móvil, mejor uno sobre otro si el nombre es largo */
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; /* Evita que los links se corten en pantallas muy pequeñas */
+    justify-content: center;
+}
+
+nav a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase; /* Da un toque más profesional */
+    letter-spacing: 1px;
+    padding: 5px 0;
+    position: relative; /* Necesario para el efecto de la línea inferior */
+    transition: color 0.3s ease;
+}
+
+/* Configuramos la línea base */
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;           /* Empezamos sin ancho */
+    height: 2px;
+    bottom: 0;
+    left: 50%;          /* Posicionamos al centro horizontal */
+    background-color: #007bff;
+    transition: all 0.3s ease;
+    transform: translateX(-50%); /* Centra la línea respecto a su propio eje */
+}
+
+/* --- EFECTO HOVER --- */
+nav a:hover {
+    color: #274f7b;
+}
+
+nav a:hover::after {
+    width: 100%;        /* Al expandirse al 100%, lo hace desde el centro por el transform */
+}
+
+/* Clase para el enlace de la página donde estás (opcional) */
+nav a.active::after {
+    width: 100%;
+}
+
+/* --- EFECTO NEÓN PARA EL H1 SOBRE TEXTO OSCURO--- */
+h1 {
+    cursor: pointer;
+    color: #000; /* Forzamos el texto a ser negro siempre */
+    transition: all 0.4s ease;
+    text-shadow: none;
+}
+
+h1:hover {
+    /* El texto NO cambia de color, se queda negro */
+    color: #000; 
+    
+    /* Solo aplicamos sombras de color, sin capas blancas internas */
+    /* Esto crea el aura sin "iluminar" la letra por dentro */
+    text-shadow: 
+        0 0 8px rgba(0, 123, 255, 0.6),  /* Brillo cercano suave */
+        0 0 20px #007bff,               /* Brillo medio */
+        0 0 45px #007bff,               /* Brillo expandido */
+        0 0 70px rgba(0, 123, 255, 0.4); /* Resplandor final tenue */
+
+    /* Un ligero aumento de tamaño ayuda a que la luz se vea más real */
+    transform: scale(1.03);
+}
+
+/* Ajuste para pantallas grandes (Desktop) */
+@media (min-width: 600px) {
+    nav a {
+        font-size: 1rem; /* Un poco más grande en PC */
+    }
+}
+
+/* --- SECCIÓN SOBRE MÍ --- */
+#sobre-mi {
+    padding: 20px 30px;
+    text-align: center; /* Centra todo el contenido */
+    max-width: 800px;   /* Evita que las líneas sean demasiado largas en PC */
+    margin: 0 auto;     /* Centra el bloque completo en la pantalla */
+    margin-top: 50px;
+    margin-bottom: 80px;
+}
+
+#sobre-mi h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+#sobre-mi p {
+    font-size: 1.15rem; /* Letra un poco más grande y legible */
+    color: #444;
+    line-height: 1.8;   /* Más espacio entre líneas para mejor lectura */
+    margin-bottom: 15px;
+}
+/* --- BOTÓN DE NAVEGACIÓN INTERNA --- */
+
+.btn-contacto {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 35px; /* Un poco más de espacio a la derecha para la flecha */
+    color: #000;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto elástico */
+    position: relative;
+}
+
+/* El icono (Flecha) */
+.btn-contacto::after {
+    content: ' ↓'; /* Flecha hacia abajo porque es un anclaje interno */
+    opacity: 0;
+    position: absolute;
+    right: 15px;
+    transition: all 0.3s ease;
+}
+
+/* --- EFECTO HOVER --- */
+.btn-contacto:hover {
+    padding-right: 45px; /* Hacemos espacio para que entre la flecha */
+    border-color: #007bff;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+    text-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    transform: translateY(5px); /* Movemos hacia ABAJO (hacia donde va el enlace) */
+}
+
+.btn-contacto:hover::after {
+    opacity: 1;
+    right: 20px;
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 900px) {
+    #sobre-mi h2 {
+        font-size: 2.5rem;
+    }
+    #sobre-mi p {
+        font-size: 1.3rem; /* Aún más presencia en monitores grandes */
+    }
+}
+
+/* --- SECCIÓN GALERÍA --- */
+#tiles {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#tiles h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* --- SECCIÓN GALERÍA (MOSAICO 6 IMÁGENES EXACTO) --- */
+
+#tiles {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.masonry-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Móvil: 1 columna */
+    gap: 15px;
+}
+
+@media (min-width: 900px) {
+    .masonry-container {
+        grid-template-columns: repeat(3, 1fr); /* Desktop: 3 columnas */
+        height: 800px; /* Altura de tu "cuadro", puedes ajustarla */
+        /* Dividimos en 10 filas para manejar porcentajes exactos */
+        grid-template-rows: repeat(10, 1fr); 
+        gap: 20px;
+    }
+
+    /* COLUMNA 1: Imágenes 1 y 2 (50% cada una) */
+    .tile-item:nth-child(1) { grid-row: span 5; }
+    .tile-item:nth-child(2) { grid-row: span 5; }
+
+    /* COLUMNA 2: Imágenes 3 y 4 (50% cada una) */
+    .tile-item:nth-child(3) { grid-row: span 5; }
+    .tile-item:nth-child(4) { grid-row: span 5; }
+
+    /* COLUMNA 3: Imágenes 5 y 6 (40% y 60%) */
+    /* Ajusta el orden según cuál quieras que sea más grande */
+    .tile-item:nth-child(5) { grid-row: span 4; } /* 40% (AI Tool) */
+    .tile-item:nth-child(6) { grid-row: span 6; } /* 60% (Social Media) */
+}
+
+/* --- ESTILOS DE LOS ITEMS --- */
+.tile-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%; /* Llenar el espacio asignado por el grid */
+    /* 1. ELIMINAMOS LA SOMBRA ESTÁTICA */
+    box-shadow: none; 
+    
+    /* 2. OPTIMIZACIÓN DE GPU */
+    will-change: transform; 
+    transform: translateZ(0); 
+    
+    /* 3. TRANSICIÓN SUAVE */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tile-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantiene la estética sin deformar */
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* --- EFECTO HOVER NEÓN --- */
+.tile-item .overlay {
+    position: absolute;
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    opacity: 0; 
+    transition: all 0.3s ease;
+}
+
+.tile-item:hover .overlay {
+    opacity: 1;
+}
+
+.tile-item:hover img {
+    transform: scale(1.02); /* Un zoom ligero es más fluido que uno grande */
+    box-shadow: 0 5px 20px rgba(0, 123, 255, 0.4); 
+    z-index: 10; /* Asegura que la sombra se vea sobre los vecinos */
+}
+
+.tile-item .overlay span {
+    color: #fff;
+    border: 1px solid #007bff;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
+}
+
+/* --- SECCIÓN MIS HABILIDADES --- */
+#mis-habilidades {
+    padding: 60px 20px;
+    text-align: center; /* Centra todos los títulos y textos */
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 60px;
+}
+
+#mis-habilidades h2 {
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#mis-habilidades h3 {
+    font-size: 1.4rem;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #007bff; /* Color azul para destacar categorías */
+    font-weight: 600;
+}
+
+/* --- ESTILO DE LAS LISTAS --- */
+
+#mis-habilidades ul {
+    list-style: none; /* Quitamos los bullets */
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Móvil: una sola columna */
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+#mis-habilidades li {
+    font-size: 1.1rem;
+    color: #444;
+    padding: 8px 15px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover sutil para las habilidades */
+#mis-habilidades li:hover {
+    color: #000;
+    text-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* --- RESPONSIVE (Desktop) --- */
+
+@media (min-width: 768px) {
+    /* En tablets/PC, las habilidades se ven una al lado de la otra */
+    #mis-habilidades ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    #mis-habilidades li {
+        background: #f9f9f9;
+        border-radius: 5px;
+        border: 1px solid #eee;
+    }
+
+    #mis-habilidades li:hover {
+        border-color: #007bff;
+        background: #fff;
+    }
+}
+
+/* --- SECCIÓN PROYECTOS --- */
+#proyectos {
+    padding: 30px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+#proyectos h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Contenedor de las tarjetas */
+#proyectos > div:not(h2) { /* Selecciona los divs que contienen cada proyecto */
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px; /* Espacio entre tarjetas en móvil */
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Efecto Hover en la Tarjeta */
+#proyectos > div:not(h2):hover {
+    transform: translateY(-10px);
+    border-color: #007bff; /* Tu azul neón */
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.15);
+}
+
+/* Estilo de los títulos dentro de la card */
+#proyectos h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Imágenes de los proyectos */
+#proyectos img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+/* Estilo para las etiquetas de tecnología (los <p> con < >) */
+#proyectos p:last-child {
+    font-family: 'Courier New', Courier, monospace; /* Toque de código */
+    font-weight: bold;
+    color: #007bff;
+    font-size: 0.9rem;
+    margin-top: 15px;
+}
+
+/* --- RESPONSIVE (Desktop) --- */
+@media (min-width: 768px) {
+    /* Usamos Grid para alinear las tarjetas */
+    #proyectos {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablet */
+        gap: 30px;
+    }
+    
+    #proyectos h2 {
+        grid-column: 1 / -1; /* El título ocupa todo el ancho */
+    }
+
+    #proyectos div {
+        margin-bottom: 0; /* Quitamos el margen porque el gap lo maneja */
+    }
+}
+
+@media (min-width: 1024px) {
+    #proyectos {
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas en desktop */
+    }
+}
+
+/* --- SECCIÓN CONTACTO --- */
+#contacto {
+    padding: 80px 20px;
+    background-color: #f4f7f9; /* Fondo de contraste suave */
+    text-align: center;
+}
+
+#contacto h2 {
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#contacto form {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* Etiquetas alineadas a la izquierda */
+}
+
+/* --- ESTILOS DE ETIQUETAS E INPUTS --- */
+#contacto label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+#contacto input[type="text"],
+#contacto input[type="email"],
+#contacto textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Evita que el padding ensanche el input */
+}
+
+/* --- EFECTO NEÓN AL HACER CLIC (FOCUS) --- */
+#contacto input:focus,
+#contacto textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+}
+
+/* --- ESTILO DEL BOTÓN ENVIAR (Igual al de la cabecera) --- */
+.btn-enviar {
+    background-color: transparent; /* Fondo transparente inicialmente */
+    color: #007bff;                /* Texto en tu azul neón */
+    padding: 15px 25px;
+    border: 2px solid #007bff;     /* Borde azul visible */
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Transición más fluida */
+    margin-top: 10px;
+    font-size: 1rem;
+    will-change: transform, background-color;
+}
+
+.btn-enviar span {
+    transition: transform 0.3s ease;
+}
+
+/* Efectos Hover */
+.btn-enviar:hover {
+    background-color: #007bff;     /* El fondo se llena de azul */
+    color: #ffffff;                /* El texto cambia a blanco */
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.6); /* Brillo neón más intenso */
+    transform: translateY(-3px);   /* Elevación suave */
+}
+
+.btn-enviar:active {
+    transform: translateY(-1px);
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+}
+
+/* Optimización para el scroll (evitar lag) */
+.btn-enviar {
+    will-change: transform;
+}
+
+/* --- RESPONSIVE Contacto --- */
+@media (min-width: 768px) {
+    #contacto {
+        padding: 100px 20px;
+    }
+    
+    #contacto form {
+        padding: 50px;
+    }
+}
+
+/* --- FOOTER --- */
+footer {
+    background-color: #1a1a1a; /* Gris casi negro */
+    color: #ffffff;
+    padding: 50px 20px 20px;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column; /* Mobile First */
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footer-info h3 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    color: #007bff; /* Tu azul neón */
+}
+
+.footer-info p {
+    font-size: 1.1rem;
+    color: #bbb;
+    line-height: 1.6;
+}
+
+.footer-links h4 {
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+}
+
+/* Iconos de Redes Sociales */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icons a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.93rem;
+    padding: 8px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    border-color: #007bff;
+    color: #007bff;
+    background: rgba(0, 123, 255, 0.05);
+    transform: translateY(-3px);
+}
+
+/* Línea divisoria y Copyright */
+footer hr {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 40px 0 20px;
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* --- RESPONSIVE (Desktop) --- */
+@media (min-width: 768px) {
+    .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .social-icons {
+        justify-content: flex-start;
+    }
+}
+
+.corazon-footer {
+    color: #007bff; /* Tu azul neón */
+    text-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* Un pequeño detalle: que el corazón lata cuando pasen el mouse */
+.corazon-footer:hover {
+    transform: scale(1.3);
+}
+
+/* Scroll Fade-in */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
